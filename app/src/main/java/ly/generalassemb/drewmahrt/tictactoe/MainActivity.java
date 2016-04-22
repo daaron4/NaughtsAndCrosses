@@ -41,10 +41,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickedStart(View view) {
-        Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-        gameIntent.putExtra("playerOneName", playerOneEditText.getText().toString());
-        gameIntent.putExtra("playerTwoName", playerTwoEditText.getText().toString());
-        startActivity(gameIntent);
+        if (playerOneEditText.getText().toString().equals("") || playerTwoEditText.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Both players need names!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+            gameIntent.putExtra("playerOneName", playerOneEditText.getText().toString());
+            gameIntent.putExtra("playerTwoName", playerTwoEditText.getText().toString());
+            startActivity(gameIntent);
+        }
     }
 
 }
