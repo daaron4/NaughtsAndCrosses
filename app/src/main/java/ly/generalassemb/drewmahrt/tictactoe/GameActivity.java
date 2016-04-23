@@ -28,6 +28,8 @@ public class GameActivity extends AppCompatActivity {
     private Player player1;
     private Player player2;
 
+    private int count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +66,14 @@ public class GameActivity extends AppCompatActivity {
         else {
             turnDisplay.setText(player2.getName() + "'s Turn");
         }
+
+        if (count == 9) {
+            turnDisplay.setText("Cat's Game!");
+        }
     }
 
     public void clickedZeroZero(View view) {
+        count++;
         if (player1.isMyTurn()) {
             zeroZero.setText("X");
             zeroZero.setClickable(false);
@@ -89,6 +96,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedZeroOne(View view) {
+        count++;
         if (player1.isMyTurn()) {
             zeroOne.setText("X");
             zeroOne.setClickable(false);
@@ -111,6 +119,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedZeroTwo(View view) {
+        count++;
         if (player1.isMyTurn()) {
             zeroTwo.setText("X");
             zeroTwo.setClickable(false);
@@ -133,6 +142,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedOneZero(View view) {
+        count++;
         if (player1.isMyTurn()) {
             oneZero.setText("X");
             oneZero.setClickable(false);
@@ -155,6 +165,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedOneOne(View view) {
+        count++;
         if (player1.isMyTurn()) {
             oneOne.setText("X");
             oneOne.setClickable(false);
@@ -177,6 +188,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedOneTwo(View view) {
+        count++;
         if (player1.isMyTurn()) {
             oneTwo.setText("X");
             oneTwo.setClickable(false);
@@ -199,6 +211,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedTwoZero(View view) {
+        count++;
         if (player1.isMyTurn()) {
             twoZero.setText("X");
             twoZero.setClickable(false);
@@ -221,6 +234,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedTwoOne(View view) {
+        count++;
         if (player1.isMyTurn()) {
             twoOne.setText("X");
             twoOne.setClickable(false);
@@ -243,6 +257,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void clickedTwoTwo(View view) {
+        count++;
         if (player1.isMyTurn()) {
             twoTwo.setText("X");
             twoTwo.setClickable(false);
