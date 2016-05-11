@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView lastWinnerText;
     private EditText playerOneEditText;
     private EditText playerTwoEditText;
-    private Button startGameButton;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -27,10 +26,14 @@ public class MainActivity extends AppCompatActivity {
         lastWinnerText = (TextView) findViewById(R.id.last_winner_text);
         playerOneEditText = (EditText) findViewById(R.id.player_one_name);
         playerTwoEditText = (EditText) findViewById(R.id.player_two_name);
-        startGameButton = (Button) findViewById(R.id.start_game_button);
 
         sharedPreferences = getApplicationContext().getSharedPreferences("secretTicTacToeKey", Context.MODE_PRIVATE);
         lastWinnerText.setText("Previous Winner: " + sharedPreferences.getString("previousWinner", ""));
+
+        if (savedInstanceState != null) {
+            playerOneEditText.setText(savedInstanceState.getString("playerOneName"));
+            playerTwoEditText.setText(savedInstanceState.getString("playerTwoName"));
+        }
 
     }
 
@@ -52,4 +55,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("playerOneName", playerOneEditText.getText().toString());
+        outState.putString("playerTwoName", playerTwoEditText.getText().toString());
+    }
 }

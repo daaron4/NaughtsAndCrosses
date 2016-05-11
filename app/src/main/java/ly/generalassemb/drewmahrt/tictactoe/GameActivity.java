@@ -35,16 +35,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Intent intent = getIntent();
-        String playerOneName = intent.getStringExtra("playerOneName");
-        String playerTwoName = intent.getStringExtra("playerTwoName");
-
-        player1 = new Player(playerOneName);
-        player1.setMyTurn(true);
-        player2 = new Player(playerTwoName);
-
         turnDisplay = (TextView) findViewById(R.id.game_message_text);
-
         zeroZero = (TextView) findViewById(R.id.zero_zero);
         zeroOne = (TextView) findViewById(R.id.zero_one);
         zeroTwo = (TextView) findViewById(R.id.zero_two);
@@ -55,8 +46,63 @@ public class GameActivity extends AppCompatActivity {
         twoOne = (TextView) findViewById(R.id.two_one);
         twoTwo = (TextView) findViewById(R.id.two_two);
 
-        displayCurrentPlayer();
+        if (savedInstanceState != null) {
+            zeroZero.setText(savedInstanceState.getString("zeroZero"));
+            zeroOne.setText(savedInstanceState.getString("zeroOne"));
+            zeroTwo.setText(savedInstanceState.getString("zeroTwo"));
+            oneZero.setText(savedInstanceState.getString("oneZero"));
+            oneOne.setText(savedInstanceState.getString("oneOne"));
+            oneTwo.setText(savedInstanceState.getString("oneTwo"));
+            twoZero.setText(savedInstanceState.getString("twoZero"));
+            twoOne.setText(savedInstanceState.getString("twoOne"));
+            twoTwo.setText(savedInstanceState.getString("twoTwo"));
+            player1 = new Player(savedInstanceState.getString("playerOneName"));
+            player2 = new Player(savedInstanceState.getString("playerTwoName"));
+            player1.setMyTurn(savedInstanceState.getBoolean("playerOneTurn"));
+            player2.setMyTurn(savedInstanceState.getBoolean("playerTwoTurn"));
+            if (checkForWinner()) {
+                disableClickableItems();
+                turnDisplay.setText(savedInstanceState.getString("turnDisplay"));
+            }
+            else if (savedInstanceState.getInt("count", count) == 9) {
+                disableClickableItems();
+                turnDisplay.setText(savedInstanceState.getString("turnDisplay"));
+            }
+            else {
+                displayCurrentPlayer();
+            }
+        }
+        else {
+            Intent intent = getIntent();
+            String playerOneName = intent.getStringExtra("playerOneName");
+            String playerTwoName = intent.getStringExtra("playerTwoName");
+            player1 = new Player(playerOneName);
+            player1.setMyTurn(true);
+            player2 = new Player(playerTwoName);
+            displayCurrentPlayer();
+        }
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("count", count);
+        outState.putString("zeroZero", zeroZero.getText().toString());
+        outState.putString("zeroOne", zeroOne.getText().toString());
+        outState.putString("zeroTwo", zeroTwo.getText().toString());
+        outState.putString("oneZero", oneZero.getText().toString());
+        outState.putString("oneOne", oneOne.getText().toString());
+        outState.putString("oneTwo", oneTwo.getText().toString());
+        outState.putString("twoZero", twoZero.getText().toString());
+        outState.putString("twoOne", twoOne.getText().toString());
+        outState.putString("twoTwo", twoTwo.getText().toString());
+        outState.putString("playerOneName", player1.getName());
+        outState.putString("playerTwoName", player2.getName());
+        outState.putBoolean("playerOneTurn", player1.isMyTurn());
+        outState.putBoolean("playerTwoTurn", player2.isMyTurn());
+        outState.putString("turnDisplay", turnDisplay.getText().toString());
     }
 
     public void displayCurrentPlayer() {
@@ -312,8 +358,8 @@ public class GameActivity extends AppCompatActivity {
         game[2][2] = twoTwo.getText().toString();
 
         // row check:
-        int x = 0;
-        int o = 0;
+        int x;
+        int o;
         for (int i = 0; i < game.length; i++) {
             x = 0;
             o = 0;
@@ -337,8 +383,6 @@ public class GameActivity extends AppCompatActivity {
         }
 
         //col check:
-        x = 0;
-        o = 0;
         for (int i = 0; i < game.length; i++) {
             x = 0;
             o = 0;
